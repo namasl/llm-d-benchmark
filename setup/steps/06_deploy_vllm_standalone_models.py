@@ -256,25 +256,6 @@ spec:
 {additional_env}
         ports:
         - containerPort: {ev['vllm_common_inference_port']}
-        startupProbe:
-          httpGet:
-            path: /health
-            port: {ev['vllm_common_inference_port']}
-          failureThreshold: 200
-          initialDelaySeconds: {ev.get('vllm_common_initial_delay_probe', 60)}
-          periodSeconds: 30
-          timeoutSeconds: 5
-        livenessProbe:
-          tcpSocket:
-            port: {ev['vllm_common_inference_port']}
-          failureThreshold: 3
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: {ev['vllm_common_inference_port']}
-          failureThreshold: 3
-          periodSeconds: 5
         resources:
           limits:
             cpu: "{ev.get('vllm_common_cpu_nr', '')}"
